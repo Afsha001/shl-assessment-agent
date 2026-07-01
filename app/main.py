@@ -12,6 +12,10 @@ app = FastAPI(title="SHL Assessment Agent")
 def health():
     return {"status": "ok"}
 
+@app.get("/")
+def root():
+    return {"status": "ok", "message": "SHL Assessment Agent is running"}
+
 
 @app.post("/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest):
