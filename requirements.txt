@@ -3,7 +3,6 @@ uvicorn
 pydantic
 python-dotenv
 groq
-sentence-transformers
-faiss-cpu
-numpy<2.0
+numpy
 requests
+scikit-learn
