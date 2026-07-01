@@ -5,5 +5,5 @@ python-dotenv
 groq
 sentence-transformers
 faiss-cpu
-numpy
+numpy<2.0
 requests

@@ -1,63 +1,61 @@
-import faiss
-from sentence_transformers import SentenceTransformer
+import logging
 
-from app.catalog import CATALOG
+logger = logging.getLogger(__name__)
 
-
-MODEL = SentenceTransformer("all-MiniLM-L6-v2")
-
-
-def build_text(item):
-    name = item.get("name", "")
-    keys = " ".join(item.get("keys", []))
-    job_levels = " ".join(item.get("job_levels", []))
-    description = item.get("description", "")
-
-    return f"{name} {keys} {job_levels} {description}"
+_model = None
+_index = None
+_catalog_list = None
 
 
-def build_search_index(catalog):
-    texts = [build_text(item) for item in catalog]
+def _ensure_loaded():
+    global _model, _index, _catalog_list
 
-    embeddings = MODEL.encode(texts, show_progress_bar=True, convert_to_numpy=True)
+    if _index is not None:
+        return
 
-    faiss.normalize_L2(embeddings)
+    import numpy as np
+    import faiss
+    from sentence_transformers import SentenceTransformer
+    from app.catalog import CATALOG
 
-    dimension = embeddings.shape[1]
-    index = faiss.IndexFlatIP(dimension)
+    logger.info("Loading sentence transformer model...")
+    _model = SentenceTransformer("all-MiniLM-L6-v2")
+
+    logger.info("Building search index...")
+    texts = []
+    for item in CATALOG:
+        name = item.get("name", "")
+        keys = " ".join(item.get("keys", []))
+        job_levels = " ".join(item.get("job_levels", []))
+        description = item.get("description", "")
+        text = name + " " + keys + " " + job_levels + " " + description
+        texts.append(text)
+
+    embeddings = _model.encode(texts, normalize_embeddings=True)
+    embeddings = np.array(embeddings).astype("float32")
+
+    index = faiss.IndexFlatIP(embeddings.shape[1])
     index.add(embeddings)
 
-    print(f"Search index built: {index.ntotal} items indexed.")
-    return index, catalog
+    _index = index
+    _catalog_list = list(CATALOG)
 
-
-INDEX, CATALOG_LIST = build_search_index(CATALOG)
+    logger.info("Search index ready with " + str(len(_catalog_list)) + " items.")
 
 
 def search(query, top_k=15):
-    query_embedding = MODEL.encode([query], convert_to_numpy=True)
-    faiss.normalize_L2(query_embedding)
+    import numpy as np
 
-    scores, positions = INDEX.search(query_embedding, top_k)
+    _ensure_loaded()
+
+    query_vec = _model.encode([query], normalize_embeddings=True)
+    query_vec = np.array(query_vec).astype("float32")
+
+    scores, indices = _index.search(query_vec, top_k)
 
     results = []
-    for position in positions[0]:
-        if position < len(CATALOG_LIST):
-            results.append(CATALOG_LIST[position])
+    for i in indices[0]:
+        if i < len(_catalog_list):
+            results.append(_catalog_list[i])
 
     return results
-
-
-if __name__ == "__main__":
-    test_queries = [
-        "senior Java developer backend",
-        "personality assessment leadership",
-        "entry level customer service",
-    ]
-
-    for query in test_queries:
-        print(f"\nQuery: {query}")
-        print("-" * 40)
-        top_results = search(query, top_k=3)
-        for i, result in enumerate(top_results, start=1):
-            print(f"{i}. {result['name']} | {result['test_type']} | {result['url']}")
