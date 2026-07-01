@@ -1,8 +1,10 @@
 fastapi
-uvicorn[standard]
+uvicorn
 pydantic
 python-dotenv
 groq
 numpy
 requests
 scikit-learn
+sentence-transformers
+faiss-cpu
