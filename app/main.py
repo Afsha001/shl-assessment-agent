@@ -8,13 +8,14 @@ logger = logging.getLogger(__name__)
 app = FastAPI(title="SHL Assessment Agent")
 
 
-@app.get("/health")
-def health():
-    return {"status": "ok"}
-
 @app.get("/")
 def root():
     return {"status": "ok", "message": "SHL Assessment Agent is running"}
+
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}
 
 
 @app.post("/chat", response_model=ChatResponse)
