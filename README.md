@@ -1,5 +1,4 @@
-<p align="center">
-
+<div align="center">
 # SHL Assessment Recommender Agent
 
 A conversational AI agent that helps hiring managers and recruiters find the right SHL assessments for their hiring needs. Built with FastAPI, Groq LLM, and TF-IDF retrieval over a catalog of 377 SHL assessments.
@@ -13,7 +12,7 @@ Base URL: https://afsha001-shl-assessment-agent.hf.space
 Health check: https://afsha001-shl-assessment-agent.hf.space/health
 
 Interactive docs: https://afsha001-shl-assessment-agent.hf.space/docs
-</p>
+</div>
 
 ---
 
@@ -26,50 +25,20 @@ Every recommendation comes directly from the SHL catalog. URLs are validated aga
 ---
 
 ## Project Structure
-shl-assessment-agent/
 
-app/
-
-init.py
-
-main.py          FastAPI app with health and chat endpoints
-
-schemas.py       Pydantic request and response models
-
-catalog.py       Loads and cleans the SHL assessment catalog
-
-retrieval.py     TF-IDF search over the catalog
-
-agent.py         Groq LLM agent with prompt and response logic
-
-data/
-
-catalog.json     SHL assessment catalog, 377 entries
-
-traces/
-
-trace_01_software_engineer.json
-
-trace_02_customer_service.json
-
-trace_03_leadership.json
-
-trace_04_graduate.json
-
-trace_05_multiturn.json
-
-eval/
-
-run_traces.py    Evaluation script that runs all traces and scores results
-
-Dockerfile           Container config for HuggingFace Spaces deployment
-
-requirements.txt     Python dependencies
-
-.env.example         Environment variable template
-
-README.md            This file
-
+| File | Purpose |
+|------|---------|
+| app/main.py | FastAPI app with health and chat endpoints |
+| app/schemas.py | Pydantic request and response models |
+| app/catalog.py | Loads and cleans the SHL assessment catalog |
+| app/retrieval.py | TF-IDF search over the catalog |
+| app/agent.py | Groq LLM agent with prompt and response logic |
+| data/catalog.json | SHL assessment catalog, 377 entries |
+| traces/ | Five conversation trace files for evaluation |
+| eval/run_traces.py | Evaluation script that scores agent responses |
+| Dockerfile | Container setup for HuggingFace Spaces |
+| requirements.txt | Python dependencies |
+| .env.example | Environment variable template |
 ---
 
 ## API Contract
@@ -136,7 +105,7 @@ Clone the repository and navigate into the project folder.
 
 On Mac or Linux:
 
-git clone https://github.com/YOUR_USERNAME/shl-assessment-agent
+git clone https://github.com/Afsha001/shl-assessment-agent
 cd shl-assessment-agent
 python3 -m venv venv
 source venv/bin/activate
@@ -145,7 +114,7 @@ cp .env.example .env
 
 On Windows:
 
-git clone https://github.com/YOUR_USERNAME/shl-assessment-agent
+git clone https://github.com/Afsha001/shl-assessment-agent
 cd shl-assessment-agent
 python -m venv venv
 venv\Scripts\Activate.ps1
