@@ -1,0 +1,10 @@
+{
+  "description": "Hiring a senior software engineer",
+  "messages": [
+    {
+      "role": "user",
+      "content": "I need assessments for hiring a senior software engineer with Java and system design skills at mid-professional level in English"
+    }
+  ],
+  "expected_keywords": ["software", "engineer", "java"]
+}

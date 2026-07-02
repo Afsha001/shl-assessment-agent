@@ -1,0 +1,18 @@
+{
+  "description": "Multi turn conversation refining recommendations",
+  "messages": [
+    {
+      "role": "user",
+      "content": "I need assessments for a sales manager role"
+    },
+    {
+      "role": "assistant",
+      "content": "{\"reply\": \"For a sales manager role I recommend the following assessments.\", \"recommendations\": [], \"end_of_conversation\": false}"
+    },
+    {
+      "role": "user",
+      "content": "Remove personality assessments and focus only on cognitive ability and verbal reasoning"
+    }
+  ],
+  "expected_keywords": ["cognitive", "ability", "verbal", "reasoning"]
+}

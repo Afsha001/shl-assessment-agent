@@ -1,0 +1,10 @@
+{
+  "description": "Hiring fresh graduates for a graduate trainee program",
+  "messages": [
+    {
+      "role": "user",
+      "content": "We are hiring fresh graduates for a graduate trainee program in business and operations, entry level, English speaking"
+    }
+  ],
+  "expected_keywords": ["graduate", "verify", "personality"]
+}

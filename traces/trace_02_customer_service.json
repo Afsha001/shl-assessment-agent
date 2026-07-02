@@ -1,0 +1,10 @@
+{
+  "description": "Hiring entry level customer service agents",
+  "messages": [
+    {
+      "role": "user",
+      "content": "We are hiring 50 entry level customer service agents for inbound calls in English"
+    }
+  ],
+  "expected_keywords": ["customer", "service", "entry"]
+}

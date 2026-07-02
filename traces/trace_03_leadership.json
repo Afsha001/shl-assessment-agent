@@ -1,0 +1,10 @@
+{
+  "description": "Hiring a senior manager with leadership skills",
+  "messages": [
+    {
+      "role": "user",
+      "content": "I need assessments for a senior manager role focused on leadership and team management"
+    }
+  ],
+  "expected_keywords": ["leadership", "manager", "personality", "senior"]
+}
